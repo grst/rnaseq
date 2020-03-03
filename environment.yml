@@ -7,6 +7,10 @@ channels:
   - defaults
 dependencies:
   ## conda-forge packages, sorting now alphabetically, without the channel prefix!
+<<<<<<< HEAD
+=======
+  - matplotlib=3.0.3 # Current 3.1.0 build incompatible with multiqc=1.7
+>>>>>>> Add RSEM
   - r-base=3.6.1
   - conda-forge::r-data.table=1.12.4
   - conda-forge::r-gplots=3.0.1.1
