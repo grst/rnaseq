@@ -24,13 +24,19 @@ generates counts relative to genes
 ([featureCounts](http://bioinf.wehi.edu.au/featureCounts/),
 [StringTie](https://ccb.jhu.edu/software/stringtie/)) or transcripts
 ([Salmon](https://combine-lab.github.io/salmon/),
+<<<<<<< HEAD
 [tximport](https://bioconductor.org/packages/release/bioc/html/tximport.html)) and performs extensive quality-control on the results
-([RSeQC](http://rseqc.sourceforge.net/),
-[Qualimap](http://qualimap.bioinfo.cipf.es/),
-[dupRadar](https://bioconductor.org/packages/release/bioc/html/dupRadar.html),
-[Preseq](http://smithlabresearch.org/software/preseq/),
-[edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html),
-[MultiQC](http://multiqc.info/)). See the [output documentation](docs/output.md) for more details of the results.
+=======
+[tximport](https://bioconductor.org/packages/release/bioc/html/tximport.html) or
+[RSEM](https://github.com/deweylab/RSEM)) and performs extensive quality-control on the results
+
+> > > > > > > Update docs
+> > > > > > > ([RSeQC](http://rseqc.sourceforge.net/),
+> > > > > > > [Qualimap](http://qualimap.bioinfo.cipf.es/),
+> > > > > > > [dupRadar](https://bioconductor.org/packages/release/bioc/html/dupRadar.html),
+> > > > > > > [Preseq](http://smithlabresearch.org/software/preseq/),
+> > > > > > > [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html),
+> > > > > > > [MultiQC](http://multiqc.info/)). See the [output documentation](docs/output.md) for more details of the results.
 
 The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It comes with docker containers making installation trivial and results highly reproducible.
 
