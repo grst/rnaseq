@@ -521,7 +521,7 @@ if (compressedReference) {
         file gz from genome_fasta_gz
 
         output:
-        file "${gz.baseName}" into ch_fasta_for_star_index, ch_fasta_for_hisat_index, 
+        file "${gz.baseName}" into ch_fasta_for_star_index, ch_fasta_for_hisat_index,
             ch_fasta_for_salmon_transcripts, ch_fasta_for_rsem_reference
 
         script:
@@ -826,7 +826,7 @@ if (!params.skipAlignment) {
           script:
           """
           mkdir rsem
-          rsem-prepare-reference -p ${task.cpus} --gtf $gtf $fasta rsem/ref 
+          rsem-prepare-reference -p ${task.cpus} --gtf $gtf $fasta rsem/ref
           """
       }
   }
@@ -1132,11 +1132,11 @@ if (!params.skipAlignment) {
       }
       // Filter removes all 'aligned' channels that fail the check
       star_aligned
-          .filter { logs, bams -> check_log(logs) }
+          /* .filter { logs, bams -> check_log(logs) } */
           .flatMap {  logs, bams -> bams }
       .into { bam_count; bam_rseqc; bam_qualimap; bam_preseq; bam_markduplicates ; bam_featurecounts; bam_stringtieFPKM; bam_forSubsamp; bam_skipSubsamp  }
        star_aligned_to_transcriptome
-          .filter { logs, bams -> check_log(logs) }
+          /* .filter { logs, bams -> check_log(logs) } */
           .flatMap {  logs, bams -> bams }
       .set { bam_rsem  }
   }
@@ -1549,11 +1549,11 @@ if (!params.skipAlignment) {
 
         input:
             file rsem_res_gene from rsem_results_genes.collect()
-            file rsem_res_isoform from rsem_results_isoforms.collect() 
+            file rsem_res_isoform from rsem_results_isoforms.collect()
 
         output:
-            file("rsem_tpm_gene.txt") 
-            file("rsem_tpm_isoform.txt") 
+            file("rsem_tpm_gene.txt")
+            file("rsem_tpm_isoform.txt")
 
         script:
         """
@@ -1568,8 +1568,8 @@ if (!params.skipAlignment) {
         for fileid in $rsem_res_isoform; do
             grep -v "^#" \${fileid} | cut -f 5 | tail -n+2 >> tmp_isoforms/\${fileid}.tpm.txt
         done
-        paste gene_ids.txt tmp_genes/*.tpm.txt > rsem_tpm_gene.txt 
-        paste transcript_ids.txt tmp_isoforms/*.tpm.txt > rsem_tpm_isoform.txt 
+        paste gene_ids.txt tmp_genes/*.tpm.txt > rsem_tpm_gene.txt
+        paste transcript_ids.txt tmp_isoforms/*.tpm.txt > rsem_tpm_isoform.txt
         """
     }
   } else {
