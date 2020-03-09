@@ -91,6 +91,7 @@ def helpMessage() {
 
     Extra options:
       --extra_star_index            Extra options that will be literally appended to the STAR index command. 
+      --extra_trim_galore           Extra options that will be literally appended to the Trim Galore! command. 
 
     Other options:
       --sampleLevel                 Used to turn off the edgeR MDS and heatmap. Set automatically when running on fewer than 3 samples
@@ -942,11 +943,11 @@ if (!params.skipTrimming) {
         nextseq = params.trim_nextseq > 0 ? "--nextseq ${params.trim_nextseq}" : ''
         if (params.single_end) {
             """
-            trim_galore --fastqc --gzip $c_r1 $tpc_r1 $nextseq $reads
+            trim_galore --fastqc --gzip $c_r1 $tpc_r1 $nextseq $reads ${params.extra_trim_galore}
             """
         } else {
             """
-            trim_galore --paired --fastqc --gzip $c_r1 $c_r2 $tpc_r1 $tpc_r2 $nextseq $reads
+            trim_galore --paired --fastqc --gzip $c_r1 $c_r2 $tpc_r1 $tpc_r2 $nextseq $reads ${params.extra_trim_galore}
             """
         }
     }
