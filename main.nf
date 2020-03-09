@@ -89,6 +89,9 @@ def helpMessage() {
       --skipEdgeR                   Skip edgeR MDS plot and heatmap
       --skipMultiQC                 Skip MultiQC
 
+    Extra options:
+      --extra_star_index            Extra options that will be literally appended to the STAR index command. 
+
     Other options:
       --sampleLevel                 Used to turn off the edgeR MDS and heatmap. Set automatically when running on fewer than 3 samples
       --outdir                      The output directory where the results will be saved
@@ -736,7 +739,7 @@ if (!params.skipAlignment) {
               --sjdbGTFfile $gtf \\
               --genomeDir star/ \\
               --genomeFastaFiles $fasta \\
-              $avail_mem
+              $avail_mem ${params.extra_star_index} 
           """
       }
   }
