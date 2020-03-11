@@ -1535,7 +1535,6 @@ if (!params.skipAlignment) {
             --bam \
             --estimate-rspd \
             --append-names \
-            --output-genome-bam \
             ${bam_file} \
             rsem/\$REF_NAME \
             ${sample_name}
