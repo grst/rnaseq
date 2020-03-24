@@ -90,8 +90,8 @@ def helpMessage() {
       --skipMultiQC                 Skip MultiQC
 
     Extra options:
-      --extra_star_index            Extra options that will be literally appended to the STAR index command. 
-      --extra_trim_galore           Extra options that will be literally appended to the Trim Galore! command. 
+      --extra_star_index            Extra options that will be literally appended to the STAR index command.
+      --extra_trim_galore           Extra options that will be literally appended to the Trim Galore! command.
 
     Other options:
       --sampleLevel                 Used to turn off the edgeR MDS and heatmap. Set automatically when running on fewer than 3 samples
@@ -740,7 +740,7 @@ if (!params.skipAlignment) {
               --sjdbGTFfile $gtf \\
               --genomeDir star/ \\
               --genomeFastaFiles $fasta \\
-              $avail_mem ${params.extra_star_index} 
+              $avail_mem ${params.extra_star_index}
           """
       }
   }
@@ -1562,8 +1562,8 @@ if (!params.skipAlignment) {
         """
         echo "gene_id\tgene_symbol" > gene_ids.txt
         echo "transcript_id\tgene_symbol" > transcript_ids.txt
-        cut -f 1 ${rsem_res_gene.get(0)} | grep -v "^#" | tail -n+2 | sed -E "s/(_|\$)/\\t/" >> gene_ids.txt
-        cut -f 1 ${rsem_res_isoform.get(0)} | grep -v "^#" | tail -n+2 | sed -E "s/(_|\$)/\\t/" >> transcript_ids.txt
+        cut -f 1 ${rsem_res_gene.get(0)} | grep -v "^#" | tail -n+2 | sed -E "s/(_PAR_Y)?(_|\$)/\\1\\t/" >> gene_ids.txt
+        cut -f 1 ${rsem_res_isoform.get(0)} | grep -v "^#" | tail -n+2 | sed -E "s/(_PAR_Y)?(_|\$)/\\1\\t/" >> transcript_ids.txt
         mkdir tmp_genes tmp_isoforms
         for fileid in $rsem_res_gene; do
             basename \$fileid | sed s/\\.genes.results\$//g > tmp_genes/\${fileid}.tpm.txt
