@@ -1426,6 +1426,7 @@ if (!params.skipAlignment) {
 
         process umi_tools_dedup {
             tag "${bam_file.baseName}"
+            cpus 1
             label "mid_memory"
             publishDir "${params.outdir}/umitools/dedup", mode: "${params.publish_dir_mode}",
                 saveAs: {filename ->
@@ -1460,6 +1461,7 @@ if (!params.skipAlignment) {
         if (!skip_rsem) {
             process umi_tools_dedup_transcriptome {
                 tag "${bam_file.baseName}"
+                cpus 1
                 label "mid_memory"
                 publishDir "${params.outdir}/umitools/dedup/transcriptome", mode: "${params.publish_dir_mode}",
                     saveAs: {filename ->

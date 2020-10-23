@@ -32,7 +32,7 @@ dependencies:
   - salmon=1.1.0
   - samtools=1.9
   - sortmerna=2.1b # for metatranscriptomics
-  - star=2.6.1d # Don't upgrade me - 2.7X indices incompatible with iGenomes.
+  - star #=2.6.1d # Don't upgrade me - 2.7X indices incompatible with iGenomes.
   - stringtie=2.0
   - subread=1.6.4
   - trim-galore=0.6.4
