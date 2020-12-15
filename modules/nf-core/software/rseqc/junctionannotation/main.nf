@@ -11,26 +11,26 @@ process RSEQC_JUNCTIONANNOTATION {
         mode: params.publish_dir_mode,
         saveAs: { filename -> saveFiles(filename:filename, options:params.options, publish_dir:getSoftwareName(task.process), publish_id:meta.id) }
 
-    conda (params.enable_conda ? "bioconda::rseqc=3.0.1" : null)
+    conda (params.enable_conda ? 'bioconda::rseqc=3.0.1' : null)
     if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
-        container "https://depot.galaxyproject.org/singularity/rseqc:3.0.1--py37h516909a_1"
+        container 'https://depot.galaxyproject.org/singularity/rseqc:3.0.1--py37h516909a_1'
     } else {
-        container "quay.io/biocontainers/rseqc:3.0.1--py37h516909a_1"
+        container 'quay.io/biocontainers/rseqc:3.0.1--py37h516909a_1'
     }
 
     input:
     tuple val(meta), path(bam)
     path  bed
-    
+
     output:
-    tuple val(meta), path("*.junction.bed"), emit: bed
-    tuple val(meta), path("*.Interact.bed"), emit: interact_bed
-    tuple val(meta), path("*.xls")         , emit: xls
-    tuple val(meta), path("*junction.pdf") , emit: pdf
-    tuple val(meta), path("*events.pdf")   , emit: events_pdf
-    tuple val(meta), path("*.r")           , emit: rscript
-    tuple val(meta), path("*.log")         , emit: log
-    path  "*.version.txt"                  , emit: version
+    tuple val(meta), path('*.junction.bed'), emit: bed
+    tuple val(meta), path('*.Interact.bed'), emit: interact_bed
+    tuple val(meta), path('*.xls')         , emit: xls
+    tuple val(meta), path('*junction.pdf') , emit: pdf
+    tuple val(meta), path('*events.pdf')   , emit: events_pdf
+    tuple val(meta), path('*.r')           , emit: rscript
+    tuple val(meta), path('*.log')         , emit: log
+    path  '*.version.txt'                  , emit: version
 
     script:
     def software = getSoftwareName(task.process)

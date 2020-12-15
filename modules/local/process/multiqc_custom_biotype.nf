@@ -10,19 +10,19 @@ process MULTIQC_CUSTOM_BIOTYPE {
         mode: params.publish_dir_mode,
         saveAs: { filename -> saveFiles(filename:filename, options:params.options, publish_dir:getSoftwareName(task.process), publish_id:meta.id) }
 
-    conda (params.enable_conda ? "conda-forge::python=3.8.3" : null)
+    conda (params.enable_conda ? 'conda-forge::python=3.8.3' : null)
     if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
-        container "https://depot.galaxyproject.org/singularity/python:3.8.3"
+        container 'https://depot.galaxyproject.org/singularity/python:3.8.3'
     } else {
-        container "quay.io/biocontainers/python:3.8.3"
+        container 'quay.io/biocontainers/python:3.8.3'
     }
 
     input:
     tuple val(meta), path(count)
     path  header
-    
+
     output:
-    tuple val(meta), path("*.tsv"), emit: tsv
+    tuple val(meta), path('*.tsv'), emit: tsv
 
     script:
     def software = getSoftwareName(task.process)

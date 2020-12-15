@@ -10,13 +10,13 @@ process GET_CHROM_SIZES {
     tag "$fasta"
     publishDir "${params.outdir}",
         mode: params.publish_dir_mode,
-        saveAs: { filename -> saveFiles(filename:filename, options:params.options, publish_dir:"genome", publish_id:'') }
+        saveAs: { filename -> saveFiles(filename:filename, options:params.options, publish_dir:'genome', publish_id:'') }
 
-    conda (params.enable_conda ? "bioconda::samtools=1.10" : null)
+    conda (params.enable_conda ? 'bioconda::samtools=1.10' : null)
     if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
-        container "https://depot.galaxyproject.org/singularity/samtools:1.10--h9402c20_2"
+        container 'https://depot.galaxyproject.org/singularity/samtools:1.10--h9402c20_2'
     } else {
-        container "quay.io/biocontainers/samtools:1.10--h9402c20_2"
+        container 'quay.io/biocontainers/samtools:1.10--h9402c20_2'
     }
 
     input:
@@ -25,7 +25,7 @@ process GET_CHROM_SIZES {
     output:
     path '*.sizes'      , emit: sizes
     path '*.fai'        , emit: fai
-    path "*.version.txt", emit: version
+    path '*.version.txt', emit: version
 
     script:
     def software = 'samtools'

@@ -6,25 +6,25 @@ def options    = initOptions(params.options)
 
 process UMITOOLS_EXTRACT {
     tag "$meta.id"
-    label "process_low"
+    label 'process_low'
     publishDir "${params.outdir}",
         mode: params.publish_dir_mode,
         saveAs: { filename -> saveFiles(filename:filename, options:params.options, publish_dir:getSoftwareName(task.process), publish_id:meta.id) }
 
-    conda (params.enable_conda ? "bioconda::umi_tools=1.1.1" : null)
+    conda (params.enable_conda ? 'bioconda::umi_tools=1.1.1' : null)
     if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
-        container "https://depot.galaxyproject.org/singularity/umi_tools:1.1.1--py38h0213d0e_1"
+        container 'https://depot.galaxyproject.org/singularity/umi_tools:1.1.1--py38h0213d0e_1'
     } else {
-        container "quay.io/biocontainers/umi_tools:1.1.1--py38h0213d0e_1"
+        container 'quay.io/biocontainers/umi_tools:1.1.1--py38h0213d0e_1'
     }
 
     input:
     tuple val(meta), path(reads)
 
     output:
-    tuple val(meta), path("*.fastq.gz"), emit: reads
-    tuple val(meta), path("*.log")     , emit: log
-    path  "*.version.txt"              , emit: version
+    tuple val(meta), path('*.fastq.gz'), emit: reads
+    tuple val(meta), path('*.log')     , emit: log
+    path  '*.version.txt'              , emit: version
 
     script:
     def software = getSoftwareName(task.process)

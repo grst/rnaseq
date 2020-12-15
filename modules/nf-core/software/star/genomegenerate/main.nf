@@ -12,11 +12,11 @@ process STAR_GENOMEGENERATE {
         saveAs: { filename -> saveFiles(filename:filename, options:params.options, publish_dir:getSoftwareName(task.process), publish_id:'') }
 
     // Note: 2.7X indices incompatible with AWS iGenomes.
-    conda (params.enable_conda ? "bioconda::star=2.6.1d" : null)
+    conda (params.enable_conda ? 'bioconda::star=2.6.1d' : null)
     if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
-        container "https://depot.galaxyproject.org/singularity/star:2.6.1d--0"
+        container 'https://depot.galaxyproject.org/singularity/star:2.6.1d--0'
     } else {
-        container "quay.io/biocontainers/star:2.6.1d--0"
+        container 'quay.io/biocontainers/star:2.6.1d--0'
     }
 
     input:
@@ -24,8 +24,8 @@ process STAR_GENOMEGENERATE {
     path gtf
 
     output:
-    path "star"         , emit: index
-    path "*.version.txt", emit: version
+    path 'star'         , emit: index
+    path '*.version.txt', emit: version
 
     script:
     def software  = getSoftwareName(task.process)

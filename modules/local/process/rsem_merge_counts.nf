@@ -4,28 +4,28 @@ include { saveFiles; getSoftwareName } from './functions'
 params.options = [:]
 
 process RSEM_MERGE_COUNTS {
-    label "process_medium"
+    label 'process_medium'
     publishDir "${params.outdir}",
         mode: params.publish_dir_mode,
         saveAs: { filename -> saveFiles(filename:filename, options:params.options, publish_dir:getSoftwareName(task.process), publish_id:'') }
 
-    conda (params.enable_conda ? "conda-forge::sed=4.7" : null)
+    conda (params.enable_conda ? 'conda-forge::sed=4.7' : null)
     if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
-        container "https://containers.biocontainers.pro/s3/SingImgsRepo/biocontainers/v1.2.0_cv1/biocontainers_v1.2.0_cv1.img"
+        container 'https://containers.biocontainers.pro/s3/SingImgsRepo/biocontainers/v1.2.0_cv1/biocontainers_v1.2.0_cv1.img'
     } else {
-        container "biocontainers/biocontainers:v1.2.0_cv1"
+        container 'biocontainers/biocontainers:v1.2.0_cv1'
     }
-    
+
     input:
     path ('genes/*')
     path ('isoforms/*')
-    
+
     output:
-    path "rsem.merged.gene_counts.tsv"      , emit: counts_gene
-    path "rsem.merged.gene_tpm.tsv"         , emit: tpm_gene
-    path "rsem.merged.transcript_counts.tsv", emit: counts_transcript
-    path "rsem.merged.transcript_tpm.tsv"   , emit: tpm_transcript
-    
+    path 'rsem.merged.gene_counts.tsv'      , emit: counts_gene
+    path 'rsem.merged.gene_tpm.tsv'         , emit: tpm_gene
+    path 'rsem.merged.transcript_counts.tsv', emit: counts_transcript
+    path 'rsem.merged.transcript_tpm.tsv'   , emit: tpm_transcript
+
     script:
     """
     mkdir -p tmp/genes

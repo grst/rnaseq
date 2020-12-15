@@ -132,7 +132,7 @@ workflow PREPARE_GENOME {
             ch_star_version = STAR_GENOMEGENERATE.out.version
         }
     }
-    
+
     /*
      * Uncompress RSEM index or generate from scratch if required
      */
@@ -177,9 +177,9 @@ workflow PREPARE_GENOME {
 
     /*
      * Uncompress Salmon index or generate from scratch if required
-     */  
+     */
     ch_salmon_index   = Channel.empty()
-    ch_salmon_version = Channel.empty()  
+    ch_salmon_version = Channel.empty()
     if ('salmon' in prepare_tool_indices) {
         if (params.salmon_index) {
             if (params.salmon_index.endsWith('.tar.gz')) {
@@ -187,7 +187,7 @@ workflow PREPARE_GENOME {
             } else {
                 ch_salmon_index = file(params.salmon_index)
             }
-        } else {        
+        } else {
             ch_salmon_index   = SALMON_INDEX ( ch_fasta, ch_transcript_fasta ).index
             ch_salmon_version = SALMON_INDEX.out.version
         }

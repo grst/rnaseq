@@ -28,7 +28,7 @@ class Headers {
     static String nf_core(workflow, monochrome_logs) {
         Map colors = log_colours(monochrome_logs)
         String.format(
-            """\n
+            '''\n
             ${dashed_line(monochrome_logs)}
                                                     ${colors.green},--.${colors.black}/${colors.green},-.${colors.reset}
             ${colors.blue}        ___     __   __   __   ___     ${colors.green}/,-._.--~\'${colors.reset}
@@ -37,8 +37,9 @@ class Headers {
                                                     ${colors.green}`._,._,\'${colors.reset}
             ${colors.purple}  ${workflow.manifest.name} v${workflow.manifest.version}${colors.reset}
             ${dashed_line(monochrome_logs)}
-            """.stripIndent()
+            '''.stripIndent()
         )
     }
+
 }
 
