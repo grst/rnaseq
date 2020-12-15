@@ -11,21 +11,21 @@ process SRA_RUNINFO_TO_FTP {
         mode: params.publish_dir_mode,
         saveAs: { filename -> saveFiles(filename:filename, options:params.options, publish_dir:getSoftwareName(task.process), publish_id:'') }
 
-    conda (params.enable_conda ? "conda-forge::python=3.8.3" : null)
+    conda (params.enable_conda ? 'conda-forge::python=3.8.3' : null)
     if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
-        container "https://depot.galaxyproject.org/singularity/python:3.8.3"
+        container 'https://depot.galaxyproject.org/singularity/python:3.8.3'
     } else {
-        container "quay.io/biocontainers/python:3.8.3"
+        container 'quay.io/biocontainers/python:3.8.3'
     }
-        
+
     input:
     path runinfo
-    
+
     output:
-    path "*.tsv", emit: tsv
-    
+    path '*.tsv', emit: tsv
+
     script:
     """
-    sra_runinfo_to_ftp.py ${runinfo.join(',')} ${runinfo.toString().tokenize(".")[0]}.runinfo_ftp.tsv
+    sra_runinfo_to_ftp.py ${runinfo.join(',')} ${runinfo.toString().tokenize('.')[0]}.runinfo_ftp.tsv
     """
 }

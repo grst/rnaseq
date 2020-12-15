@@ -17,17 +17,17 @@ process SRA_TO_SAMPLESHEET {
     tuple val(meta), path(fastq)
 
     output:
-    tuple val(meta), path("*csv"), emit: csv
-    
+    tuple val(meta), path('*csv'), emit: csv
+
     exec:
     //  Remove custom keys needed to download the data
     def meta_map = meta.clone()
-    meta_map.remove("id")
-    meta_map.remove("fastq_1")
-    meta_map.remove("fastq_2")
-    meta_map.remove("md5_1")
-    meta_map.remove("md5_2")
-    meta_map.remove("single_end")
+    meta_map.remove('id')
+    meta_map.remove('fastq_1')
+    meta_map.remove('fastq_2')
+    meta_map.remove('md5_1')
+    meta_map.remove('md5_2')
+    meta_map.remove('single_end')
 
     // Add required fields for the pipeline to the beginning of the map
     pipeline_map = [
@@ -41,6 +41,6 @@ process SRA_TO_SAMPLESHEET {
 
     // Write to file
     def file = file("${task.workDir}/${meta.id}.samplesheet.csv")
-    file.write pipeline_map.keySet().collect{ '"' + it + '"'}.join(",") + '\n'
-    file.append(pipeline_map.values().collect{ '"' + it + '"'}.join(",")) + '\n'
+    file.write pipeline_map.keySet().collect { '"' + it + '"' }.join(',') + '\n'
+    file.append(pipeline_map.values().collect { '"' + it + '"' }.join(',')) + '\n'
 }

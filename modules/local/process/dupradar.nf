@@ -11,11 +11,11 @@ process DUPRADAR {
         mode: params.publish_dir_mode,
         saveAs: { filename -> saveFiles(filename:filename, options:params.options, publish_dir:getSoftwareName(task.process), publish_id:meta.id) }
 
-    conda (params.enable_conda ? "bioconda::bioconductor-dupradar=1.18.0" : null)
+    conda (params.enable_conda ? 'bioconda::bioconductor-dupradar=1.18.0' : null)
     if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
-        container "https://depot.galaxyproject.org/singularity/bioconductor-dupradar:1.18.0--r40_1"
+        container 'https://depot.galaxyproject.org/singularity/bioconductor-dupradar:1.18.0--r40_1'
     } else {
-        container "quay.io/biocontainers/bioconductor-dupradar:1.18.0--r40_1"
+        container 'quay.io/biocontainers/bioconductor-dupradar:1.18.0--r40_1'
     }
 
     input:
@@ -23,10 +23,10 @@ process DUPRADAR {
     path  gtf
 
     output:
-    tuple val(meta), path("*.pdf")    , emit: pdf
-    tuple val(meta), path("*.txt")    , emit: txt
-    tuple val(meta), path("*_mqc.txt"), emit: multiqc
-    path  "*.version.txt"             , emit: version
+    tuple val(meta), path('*.pdf')    , emit: pdf
+    tuple val(meta), path('*.txt')    , emit: txt
+    tuple val(meta), path('*_mqc.txt'), emit: multiqc
+    path  '*.version.txt'             , emit: version
 
     script: // This script is bundled with the pipeline, in nf-core/rnaseq/bin/
     def software = getSoftwareName(task.process)

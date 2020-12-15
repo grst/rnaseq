@@ -15,7 +15,7 @@ def getSoftwareName(task_process) {
  * Function to initialise default values and to generate a Groovy Map of available options for nf-core modules
  */
 def initOptions(Map args) {
-    def Map options = [:]
+    Map options = [:]
     options.args          = args.args ?: ''
     options.args2         = args.args2 ?: ''
     options.publish_by_id = args.publish_by_id ?: false
@@ -30,7 +30,7 @@ def initOptions(Map args) {
  */
 def getPathFromList(path_list) {
     def paths = path_list.findAll { item -> !item?.trim().isEmpty() }  // Remove empty entries
-    paths = paths.collect { it.trim().replaceAll("^[/]+|[/]+\$", "") } // Trim whitespace and trailing slashes
+    paths = paths.collect { it.trim().replaceAll("^[/]+|[/]+\$", '') } // Trim whitespace and trailing slashes
     return paths.join('/')
 }
 

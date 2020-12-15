@@ -12,11 +12,11 @@ process HISAT2_BUILD {
         mode: params.publish_dir_mode,
         saveAs: { filename -> saveFiles(filename:filename, options:params.options, publish_dir:getSoftwareName(task.process), publish_id:'') }
 
-    conda (params.enable_conda ? "bioconda::hisat2=2.2.0" : null)
+    conda (params.enable_conda ? 'bioconda::hisat2=2.2.0' : null)
     if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
-        container "https://depot.galaxyproject.org/singularity/hisat2:2.2.0--py37hfa133b6_4"
+        container 'https://depot.galaxyproject.org/singularity/hisat2:2.2.0--py37hfa133b6_4'
     } else {
-        container "quay.io/biocontainers/hisat2:2.2.0--py37hfa133b6_4"
+        container 'quay.io/biocontainers/hisat2:2.2.0--py37hfa133b6_4'
     }
 
     input:
@@ -25,13 +25,13 @@ process HISAT2_BUILD {
     path splicesites
 
     output:
-    path "hisat2",        emit: index
-    path "*.version.txt", emit: version
+    path 'hisat2',        emit: index
+    path '*.version.txt', emit: version
 
     script:
     def avail_mem = 0
     if (!task.memory) {
-        log.info "[HISAT2 index build] Available memory not known - defaulting to 0. Specify process memory requirements to change this."
+        log.info '[HISAT2 index build] Available memory not known - defaulting to 0. Specify process memory requirements to change this.'
     } else {
         log.info "[HISAT2 index build] Available memory: ${task.memory}"
         avail_mem = task.memory.toGiga()
@@ -47,7 +47,7 @@ process HISAT2_BUILD {
         exon = "--exon ${gtf.baseName}.exons.txt"
     } else {
         log.info "[HISAT2 index build] Less than ${params.hisat_build_memory} GB available, so NOT using splice sites and exons in HISAT2 index."
-        log.info "[HISAT2 index build] Use --hisat_build_memory [small number] to skip this check."
+        log.info '[HISAT2 index build] Use --hisat_build_memory [small number] to skip this check.'
     }
 
     def software = getSoftwareName(task.process)

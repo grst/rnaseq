@@ -6,16 +6,16 @@ def options    = initOptions(params.options)
 
 process SALMON_QUANT {
     tag "$meta.id"
-    label "process_medium"
+    label 'process_medium'
     publishDir "${params.outdir}",
         mode: params.publish_dir_mode,
         saveAs: { filename -> saveFiles(filename:filename, options:params.options, publish_dir:getSoftwareName(task.process), publish_id:meta.id) }
 
-    conda (params.enable_conda ? "bioconda::salmon=1.4.0" : null)
+    conda (params.enable_conda ? 'bioconda::salmon=1.4.0' : null)
     if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
-        container "https://depot.galaxyproject.org/singularity/salmon:1.4.0--hf69c8f4_0"
+        container 'https://depot.galaxyproject.org/singularity/salmon:1.4.0--hf69c8f4_0'
     } else {
-        container "quay.io/biocontainers/salmon:1.4.0--hf69c8f4_0"
+        container 'quay.io/biocontainers/salmon:1.4.0--hf69c8f4_0'
     }
 
     input:
@@ -24,10 +24,10 @@ process SALMON_QUANT {
     path  gtf
     path  transcript_fasta
     val   alignment_mode
-    
+
     output:
     tuple val(meta), path("${prefix}"), emit: results
-    path  "*.version.txt"             , emit: version
+    path  '*.version.txt'             , emit: version
 
     script:
     def software    = getSoftwareName(task.process)
@@ -39,7 +39,7 @@ process SALMON_QUANT {
         reference   = "-t $transcript_fasta"
         input_reads = "-a $reads"
     }
-    
+
     def strandedness = meta.single_end ? 'U' : 'IU'
     if (meta.strandedness == 'forward') {
         strandedness = meta.single_end ? 'SF' : 'ISF'

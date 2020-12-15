@@ -11,23 +11,23 @@ process TRIMGALORE {
         mode: params.publish_dir_mode,
         saveAs: { filename -> saveFiles(filename:filename, options:params.options, publish_dir:getSoftwareName(task.process), publish_id:meta.id) }
 
-    conda (params.enable_conda ? "bioconda::trim-galore=0.6.6" : null)
+    conda (params.enable_conda ? 'bioconda::trim-galore=0.6.6' : null)
     if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
-        container "https://depot.galaxyproject.org/singularity/trim-galore:0.6.6--0"
+        container 'https://depot.galaxyproject.org/singularity/trim-galore:0.6.6--0'
     } else {
-        container "quay.io/biocontainers/trim-galore:0.6.6--0"
+        container 'quay.io/biocontainers/trim-galore:0.6.6--0'
     }
 
     input:
     tuple val(meta), path(reads)
 
     output:
-    tuple val(meta), path("*.fq.gz")    , emit: reads
-    tuple val(meta), path("*report.txt"), emit: log
-    path "*.version.txt"                , emit: version
+    tuple val(meta), path('*.fq.gz')    , emit: reads
+    tuple val(meta), path('*report.txt'), emit: log
+    path '*.version.txt'                , emit: version
 
-    tuple val(meta), path("*.html"), emit: html optional true
-    tuple val(meta), path("*.zip") , emit: zip optional true
+    tuple val(meta), path('*.html'), emit: html optional true
+    tuple val(meta), path('*.zip') , emit: zip optional true
 
     script:
     // Calculate number of --cores for TrimGalore based on value of task.cpus

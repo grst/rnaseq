@@ -14,21 +14,21 @@ process SRA_FASTQ_FTP {
         mode: params.publish_dir_mode,
         saveAs: { filename -> saveFiles(filename:filename, options:params.options, publish_dir:getSoftwareName(task.process), publish_id:meta.id) }
 
-    conda (params.enable_conda ? "conda-forge::sed=4.7" : null)
+    conda (params.enable_conda ? 'conda-forge::sed=4.7' : null)
     if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
-        container "https://containers.biocontainers.pro/s3/SingImgsRepo/biocontainers/v1.2.0_cv1/biocontainers_v1.2.0_cv1.img"
+        container 'https://containers.biocontainers.pro/s3/SingImgsRepo/biocontainers/v1.2.0_cv1/biocontainers_v1.2.0_cv1.img'
     } else {
-        container "biocontainers/biocontainers:v1.2.0_cv1"
+        container 'biocontainers/biocontainers:v1.2.0_cv1'
     }
-    
+
     input:
     tuple val(meta), val(fastq)
 
     output:
-    tuple val(meta), path("*fastq.gz"), emit: fastq
-    tuple val(meta), path("*md5")     , emit: md5
+    tuple val(meta), path('*fastq.gz'), emit: fastq
+    tuple val(meta), path('*md5')     , emit: md5
 
-    script:    
+    script:
     if (meta.single_end) {
         """
         curl -L ${fastq[0]} -o ${meta.id}.fastq.gz

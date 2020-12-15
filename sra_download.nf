@@ -8,15 +8,15 @@ params.summary_params = [:]
 /* --          VALIDATE INPUTS                 -- */
 ////////////////////////////////////////////////////
 
-if (params.public_data_ids) { 
+if (params.public_data_ids) {
     Channel
         .from(file(params.public_data_ids, checkIfExists: true))
         .splitCsv(header:false, sep:'', strip:true)
         .map { it[0] }
         .unique()
         .set { ch_public_data_ids }
-} else { 
-    exit 1, 'Input file with public database ids not specified!' 
+} else {
+    exit 1, 'Input file with public database ids not specified!'
 }
 
 ////////////////////////////////////////////////////
@@ -37,7 +37,6 @@ include { SRA_MERGE_SAMPLESHEET } from './modules/local/process/sra_merge_sample
 ////////////////////////////////////////////////////
 
 workflow SRA_DOWNLOAD {
-
     /*
      * MODULE: Get SRA run information for public database ids
      */
@@ -56,8 +55,8 @@ workflow SRA_DOWNLOAD {
         .out
         .tsv
         .splitCsv(header:true, sep:'\t')
-        .map { 
-            meta -> 
+        .map {
+            meta ->
                 meta.single_end = meta.single_end.toBoolean()
                 [ meta, [ meta.fastq_1, meta.fastq_2 ] ]
         }
@@ -82,18 +81,17 @@ workflow SRA_DOWNLOAD {
          * MODULE: Create a merged samplesheet across all samples for the pipeline
          */
         SRA_MERGE_SAMPLESHEET (
-            SRA_TO_SAMPLESHEET.out.csv.collect{it[1]}
+            SRA_TO_SAMPLESHEET.out.csv.collect { it[1] }
         )
 
         /*
          * If ids don't have a direct FTP download link write them to file for download outside of the pipeline
          */
-        def no_ids_file = ["${params.outdir}", "${modules['sra_fastq_ftp'].publish_dir}", "IDS_NOT_DOWNLOADED.txt" ].join(File.separator)
+        def no_ids_file = ["${params.outdir}", "${modules['sra_fastq_ftp'].publish_dir}", 'IDS_NOT_DOWNLOADED.txt' ].join(File.separator)
         ch_sra_reads
             .map { meta, reads -> if (!meta.fastq_1) "${meta.id.split('_')[0..-2].join('_')}" }
             .unique()
             .collectFile(name: no_ids_file, sort: true, newLine: true)
-
     }
 }
 
