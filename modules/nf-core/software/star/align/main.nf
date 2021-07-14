@@ -45,6 +45,8 @@ process STAR_ALIGN {
     def out_sam_type = (options.args.contains('--outSAMtype')) ? '' : '--outSAMtype BAM Unsorted'
     def mv_unsorted_bam = (options.args.contains('--outSAMtype BAM Unsorted SortedByCoordinate')) ? "mv ${prefix}.Aligned.out.bam ${prefix}.Aligned.unsort.out.bam" : ''
     """
+    echo "TATA" > passlist.txt
+    
     STAR \\
         --genomeDir $index \\
         --readFilesIn $reads  \\
